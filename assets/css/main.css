@@ -1,0 +1,271 @@
+/*
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2015 Mark William Hughes
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+ 
+body {
+	margin:0;
+	padding:0
+}
+
+/* Steps and welcome text */
+#welcome_text {
+	font-family:"CG Alpin Gothic No 1";
+	position:absolute;
+	top:90px;
+	left:80px
+}
+
+#welcome_text p {
+	width:400px
+}
+
+h1 {
+	padding-top:2px;
+	font-family:"Coke MIR Gothic";
+	font-size:20px
+}
+
+h1 em {
+	color:#d33131;
+	font-style:normal
+}
+
+#step1 {
+	background-image:url(../images/1.png);
+	background-repeat:no-repeat;
+	height:20px;
+	padding-left:30px
+}
+
+#step2 {
+	background-image:url(../images/2.png);
+	background-repeat:no-repeat;
+	height:20px;
+	padding-left:30px
+}
+
+/* main stage */
+.stage {
+	display:none;
+	width:800px;
+	height:450px;
+	background-size:cover
+}
+
+.button1 {
+	width:73px;
+	height:16px;
+	background-image:url(../images/button1.png);
+	text-align:center
+}
+
+.button1:hover {
+	background-image:url(../images/button1_hover.png)
+}
+
+.button2 {
+	width:44px;
+	height:16px;
+	background-image:url(../images/button2.png);
+	text-align:center
+}
+
+.button2:hover {
+	background-image:url(../images/button2_hover.png)
+}
+
+/* Load Stage */
+#load {
+	background-color:#000;
+	font-family:"CG Alpin Gothic No 1"
+}
+
+#loadbox {
+	width:312px;
+	height:181px;
+	background-image:url(../images/load.png);
+	background-size:cover;
+	margin:auto;
+	text-align:center
+}
+
+#loadinfo {
+	margin-top:30px;
+	font-size:16px
+}
+
+/* Main Stage */
+#main {
+	background-image:url(../images/mainpage.png);
+	background-size:100%;
+	background-size:cover
+}
+
+/* Mixer Stage */
+#mixer {
+	background-image:url(../images/mainpage.png);
+	background-size:100%;
+	background-size:cover
+}
+
+#backmixer {
+	position:absolute;
+	top:90px;
+	left:10px;
+	opacity:.5;
+	filter:alpha(opacity=50)
+/* For IE8 and earlier */
+}
+
+#row {
+	position:absolute;
+	width:700px;
+	left:70px;
+	height:35px
+}
+
+#leftbox {
+	padding-top:5px;
+	float:left;
+	height:100%;
+	width:155px
+}
+
+#rightbox {
+	padding-left:20px;
+	height:100%;
+	width:100%
+}
+
+.row0 {
+	top:92px
+}
+
+.row1 {
+	top:138px
+}
+
+.row2 {
+	top:182px
+}
+
+.row3 {
+	top:228px
+}
+
+.row4 {
+	top:270px
+}
+
+.row5 {
+	top:315px
+}
+
+.two .box {
+	width:12px;
+	height:35px;
+	background-image:url(../images/tabs/2s_clear.png)
+}
+
+/* Create Panel */
+#right_bar {
+	font-family:"CG Alpin Gothic No 1";
+	position: absolute;
+	left: 500px;
+	top: 90px;
+}
+#create_button a {
+	font-size:15px;
+	color:#fff;
+	text-decoration:none
+}
+
+#create_button {
+	text-align:center;
+	width:110px;
+	height:24px;
+	background-image:url(../images/button1.png);
+	background-size:cover;
+	cursor:hand;
+	display: block;
+}
+
+#create_button:hover {
+	background-image:url(../images/button1_hover.png)
+}
+
+#create_button:hover > a {
+	color:#000
+}
+
+#right_bar ul {
+	list-style-image: url(../images/bullet.png);
+}
+
+#right_bar ul li a {
+	color: #000000;
+	text-decoration: none;
+}
+
+#right_bar ul li a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+
+/* time manager */
+#timemanager {
+	position: absolute;
+	top: 50px;
+	left: 300px;
+}
+
+#playButton {
+	display:block;
+	width: 64px;
+	height: 17px;
+	background-repeat: no-repeat;
+}
+
+
+/* timeline */
+#timeline-container span {
+	font-family:"CG Alpin Gothic No 1";
+	color: #d33131;
+}
+
+.s_stopped {
+	background-image: url(../images/play.png);
+}
+
+.s_stopped:hover {
+	background-image: url(../images/play_hover.png);
+}
+
+.s_playing {
+	background-image: url(../images/stop.png);
+}
+
+.s_playing:hover {
+	background-image: url(../images/stop_hover.png);
+}

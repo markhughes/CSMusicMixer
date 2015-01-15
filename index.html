@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Music Mixer</title>
+		
+		<link rel="stylesheet" type="text/css" href="assets/css/fonts.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/main.css" />
+
+	</head>
+	
+	<body>
+		<div class="stage" id="load">
+			<div id="loadbox">
+				<span id="loadinfo"></span>
+			</div>
+		</div>
+		
+		<div class="stage" id="main">
+		
+			<div id="right_bar">
+				<h1>create something <em>fresh</em></h1> 
+				<ul>
+					<li><a href="#" onclick="Mixer.setCollection('country');" class="country_class">Country</a></li>
+					<li><a href="#" onclick="Mixer.setCollection('dance');" class="dance_class">Dance</a></li>
+					<li><a href="#" onclick="Mixer.setCollection('hiphop');" class="hiphop_class">Hip-Hop</a></li>
+					<li><a href="#" onclick="Mixer.setCollection('latin');" class="latin_class">Latin</a></li>
+					<li><a href="#" onclick="Mixer.setCollection('pop');" class="pop_class">Pop</a></li>
+					<li><a href="#" onclick="Mixer.setCollection('rock');" class="rock_class">Rock</a></li>
+				</ul>
+				
+				<span id="create_button">
+					<a href="javascript:openMixer()">START MIXING</a>
+				</span>
+				
+				<h1>your <em>stored</em> tracks</em></h1> 
+				<p>You have no stored tracks!</p>
+	
+			</div>
+			
+			<div id="welcome_text">
+				<h1 id="step1">choose a <em>genre</em></h1> 
+				<p>
+					Select an item from the genre list. You have your choice from Country to Hip-Hop. The genre you choose will give you a pre mix template to start you on your journey.
+				</p>
+				<h1 id="step2">start <em>mixing</em></h1> 
+				<p>
+					Click on the "START MIXING" button on the right to begin.
+				</p>
+				
+			</div>
+			
+
+		
+		</div>
+		
+		<div class="stage" id="mixer">
+			<div id="backmixer">
+				<img src="assets/images/mixer.png" width="750">
+			</div>
+			<div id="timemanager">
+				<a id="playButton" class="s_stopped" href="javascript:;" onclick="Mixer.playStopButton();" state="stopped"></a>
+			</div>
+			
+			<div id="rows-collection"></div>
+			<div id="timeline-container" style="position: absolute; top: 92px; left: 220px;">
+			<svg width="5" height="260"><rect width="150" height="265" style="fill:#d33131;fill-opacity:0.8"></svg>
+				<br>
+				<span id="timeline-seconds">0s</span>
+				
+			</div>
+		</div>
+		
+		<script>
+			var require = {
+				deps: [		"assets/js/SoundsLibrary.js", "assets/js/StepSequence.js", "assets/js/Mixer.js",
+							"assets/js/Txt.js","assets/js/PrototypeTools.js", "assets/js/main.js"],
+				callback: function(module1, module2) {
+					window.addEventListener("load", new function() {
+						loadingStatus("Loading ...");
+						showStage("load");
+						SoundsLibrary.load.loadAll();
+					
+					});
+				}
+			};
+		</script>
+		<script src="assets/js/require.js"></script>		
+	</body>
+</html>
