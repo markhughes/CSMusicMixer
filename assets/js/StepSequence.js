@@ -30,6 +30,14 @@ StepSequence._timers = [];
 StepSequence._set = [];
 StepSequence.timeLine = null;
 
+StepSequence.objCounts = 0;
+StepSequence.objs = [];
+
+StepSequence.gc = function() {
+	StepSequence.objs = [];
+	StepSequence.objCounts = 0;
+}
+
 StepSequence.set = function(set) {
 	this._set = set;
 }
@@ -52,8 +60,11 @@ StepSequence.playPointer = function(row, at) {
 		// Play it! 
 		console.log(row + ": step is not blank, playing ");
 		
-		Mixer._collection_sounds[Mixer.getSample(row)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(row)].play();
+		StepSequence.objs[StepSequence.objCounts] = Mixer._collection_sounds[Mixer.getSample(row)].cloneNode(true);
+		
+		//StepSequence.objs[StepSequence.objCounts] = 0;
+		StepSequence.objs[StepSequence.objCounts].play();
+		StepSequence.objCounts++;
 		
 		console.log(Mixer._collection_sounds[Mixer.getSample(row)].src);
 	} else {
@@ -219,6 +230,8 @@ StepSequence.stop = function() {
 	
 	clearInterval(StepSequence.timeLine);
 	StepSequence._at = 0;
+	
+	this.gc();
 	
 	document.getElementById("timeline-container").style.left = "220px";
 	document.getElementById("timeline-seconds").innerHTML = "0s";
