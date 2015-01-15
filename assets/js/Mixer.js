@@ -165,3 +165,28 @@ Mixer.playStopButton = function() {
 		StepSequence.stop();
 	}
 }
+
+Mixer.clearAll = function() {
+	Mixer.buildBlankRows();
+	StepSequence.buildSequence(); // Make sure we rebuild the sequence, otherwise it's still store in code
+	
+	// force stop the song just in case its playing
+	document.getElementById("playButton").setAttribute("src", "assets/images/play.png");
+	document.getElementById("playButton").setAttribute("class", "s_stopped");
+	document.getElementById("playButton").setAttribute("state", "stopped");
+	StepSequence.stop();
+}
+
+Mixer.save = function() {
+	Interface.showInput('Save file', "Name this track", "New Track", function(a) {
+		if(a != null) {
+			if(localStorage.getItem("saved-tracks") == null) {
+				localStorage.setItem("saved-tracks", []);
+			}
+			var tracks = localStorage.getItem("saved-tracks");
+			tracks[a.value.toLowerCase()] = StepSequence._set;
+			
+			localStorage.setItem("saved-tracks", tracks);
+		}
+	 });
+}

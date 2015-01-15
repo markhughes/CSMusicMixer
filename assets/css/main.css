@@ -233,25 +233,19 @@ h1 em {
 	text-decoration: underline;
 }
 
-/* time manager */
-#timemanager {
+/* button suite */
+#button-suite {
 	position: absolute;
 	top: 50px;
 	left: 300px;
 }
 
 #playButton {
+	float: left;
 	display:block;
-	width: 64px;
+	width: 45px;
 	height: 17px;
 	background-repeat: no-repeat;
-}
-
-
-/* timeline */
-#timeline-container span {
-	font-family:"CG Alpin Gothic No 1";
-	color: #d33131;
 }
 
 .s_stopped {
@@ -268,4 +262,65 @@ h1 em {
 
 .s_playing:hover {
 	background-image: url(../images/stop_hover.png);
+}
+
+#smallButton {
+font-family:"CG Alpin Gothic No 1";
+text-decoration: none;
+font-size: 12px;
+padding-top: 2px;
+	float: left;
+	text-align: center;
+	color: #fff;
+	display:block;
+	width: 44px;
+	height: 16px;
+	background-image: url(../images/button2.png);
+	background-repeat: no-repeat;
+}
+
+#smallButton:hover {
+	background-image: url(../images/button2_hover.png);
+}
+
+#mediumButton {
+font-family:"CG Alpin Gothic No 1";
+text-decoration: none;
+	float: left;
+	text-align: center;
+	color: #fff;
+	display:block;
+	width: 73px;
+	height: 16px;
+	background-image: url(../images/button1.png);
+	background-repeat: no-repeat;
+}
+
+#mediumButton:hover {
+	background-image: url(../images/button1_hover.png);
+}
+
+
+/* timeline */
+#timeline-container span {
+	font-family:"CG Alpin Gothic No 1";
+	color: #d33131;
+}
+
+
+
+/* alert box stuff */
+#messageBox {
+	font-family:"CG Alpin Gothic No 1";
+	text-align: center;
+	background-image: url(../images/messagebox.png);
+	background-repeat: no-repeat;
+	width: 295px;
+	height: 428px;
+	margin: 0 auto;
+	top: 30px;
+}
+
+#messageBox input {
+	
 }

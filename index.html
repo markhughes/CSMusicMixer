@@ -56,9 +56,14 @@
 			<div id="backmixer">
 				<img src="assets/images/mixer.png" width="750">
 			</div>
-			<div id="timemanager">
+			<div id="button-suite">
 				<a id="playButton" class="s_stopped" href="javascript:;" onclick="Mixer.playStopButton();" state="stopped"></a>
+				<a id="smallButton" href="javascript:;" onclick="Mixer.clearAll();">Clear</a>
+				<a id="smallButton" href="javascript:;" onclick="Mixer.save();">Save</a>
+				<a id="smallButton" href="javascript:;" onclick="Mixer.share();">Share</a>
+				
 			</div>
+						
 			
 			<div id="rows-collection"></div>
 			<div id="timeline-container" style="position: absolute; top: 92px; left: 220px;">
@@ -71,7 +76,7 @@
 		
 		<script>
 			var require = {
-				deps: [		"assets/js/SoundsLibrary.js", "assets/js/StepSequence.js", "assets/js/Mixer.js",
+				deps: [		"assets/js/SoundsLibrary.js", "assets/js/StepSequence.js", "assets/js/Mixer.js", "assets/js/Interface.js",
 							"assets/js/Txt.js","assets/js/PrototypeTools.js", "assets/js/main.js"],
 				callback: function(module1, module2) {
 					window.addEventListener("load", new function() {
