@@ -24,3 +24,21 @@
  */
  
 var Txt = Txt || {};
+
+Txt.en = {};
+Txt.en.label = "Australian English";
+/* 
+ * Loading stage texts
+ */
+Txt.en.stage_loading = {}
+
+/*
+ * Main stage texts 
+ */
+Txt.en.stage_main = {};
+Txt.en.stage_main.step_one = "choose a <em>genre</em>";
+Txt.en.stage_main.step_one_desc = "choose a <em>genre</em>";
+
+Txt.en.stage_main.step_two = "start <em>mixing</em>";
+Txt.en.stage_main.step_two_desc = "Click on the \"START MIXING\" button on the right to begin.";
+
