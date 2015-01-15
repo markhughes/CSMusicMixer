@@ -184,43 +184,23 @@ StepSequence.moveTimeline = function() {
 	document.getElementById("timeline-seconds").innerHTML = Math.floor(this._at, 1) + "s";
 	
 	if(StepSequence._at == 60) {
+		Mixer.playStopButton();
 		this.stop();
 	}
 	
 }
 
 StepSequence.stop = function() {
-	if(StepSequence._timers[0] != null) {
-		clearTimeout(StepSequence._timers[0]);
-		Mixer._collection_sounds[Mixer.getSample(0)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(0)].pause();
-	}
-	if(StepSequence._timers[1] != null) {
-		clearTimeout(StepSequence._timers[1]);
-		Mixer._collection_sounds[Mixer.getSample(1)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(1)].pause();
-	}
-	if(StepSequence._timers[2] != null) {
-		clearTimeout(StepSequence._timers[2]);
-		Mixer._collection_sounds[Mixer.getSample(2)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(2)].pause();
-	}
-	if(StepSequence._timers[3] != null) {
-		clearTimeout(StepSequence._timers[3]);
-		Mixer._collection_sounds[Mixer.getSample(3)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(3)].pause();
-	}
-	if(StepSequence._timers[4] != null) {
-		clearTimeout(StepSequence._timers[4]);
-		Mixer._collection_sounds[Mixer.getSample(4)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(4)].pause();
-	}
-	if(StepSequence._timers[5] != null) {
-		clearTimeout(StepSequence._timers[5]);
-		Mixer._collection_sounds[Mixer.getSample(5)].currentTime = 0;
-		Mixer._collection_sounds[Mixer.getSample(5)].pause();
-	}
-		
+	if(StepSequence._timers[0] != null) clearTimeout(StepSequence._timers[0]);
+	if(StepSequence._timers[1] != null) clearTimeout(StepSequence._timers[1]);
+	if(StepSequence._timers[2] != null) clearTimeout(StepSequence._timers[2]);
+	if(StepSequence._timers[3] != null) clearTimeout(StepSequence._timers[3]);
+	if(StepSequence._timers[4] != null) clearTimeout(StepSequence._timers[4]);
+	if(StepSequence._timers[5] != null) clearTimeout(StepSequence._timers[5]);
+	
+
+	this.objs.forEach(function (o) { o.pause(); });
+
 	StepSequence._timers[0] = null;
 	StepSequence._timers[1] = null;
 	StepSequence._timers[2] = null;
