@@ -29,6 +29,49 @@ Mixer._slots = [];
 Mixer._collection = {};
 Mixer._collection_sounds = [];
 
+Mixer.removeStored = function (rem) {
+	var workingWith = JSON.parse(localStorage.getItem("savedTracks"));
+	
+	workingWith.splice(rem, 1);
+	
+	
+	localStorage.setItem("savedTracks", JSON.stringify(workingWith));
+	
+	// make sure we rebuild too - it's required! 
+	Mixer.loadExistingTracks();
+	
+}
+
+Mixer.doLoad = function(collection, trackData) {
+	var options = [];
+	
+	options["yes"] = true;
+	
+	Interface.showMessage("Hi", "Your track data WAS saved.<br>I just can't load it yet!<br><br>You should be able to do this<br>in the next release.", null, options);
+}
+
+
+Mixer.loadExistingTracks = function() {
+	var built = "<ul>";
+	
+	Mixer.currentI = 0;
+	
+	JSON.parse(localStorage.getItem("savedTracks")).forEach(function (a) {
+		var splitUp = a.split("||[\/@]/@||");
+		built+= "<li><a href=\"#\" onclick=\"Mixer.doLoad('"+encodeURI(splitUp[1])+"', '"+encodeURI(splitUp[2])+"');\">"+splitUp[0]+"</a> <a href=\"#\" onclick=\"Mixer.removeStored("+JSON.parse(localStorage.getItem("savedTracks")).indexOf(a)+");\" class=\"removeButton\">X</a></li>";
+		console.log(a);
+		Mixer.currentI++;
+	});
+	
+	built+= "</ul>";
+	
+	if(Mixer.currentI ==0) {
+		built = "You have no stored tracks!";
+	}
+	
+	document.getElementById("storedTracksList").innerHTML = built;
+}
+
 Mixer.setSample = function(sample_id, slot) {
 	Mixer._slots[slot] = sample_id;
 }
@@ -178,15 +221,21 @@ Mixer.clearAll = function() {
 }
 
 Mixer.save = function() {
-	Interface.showInput('Save file', "Name this track", "New Track", function(a) {
-		if(a != null) {
-			if(localStorage.getItem("saved-tracks") == null) {
-				localStorage.setItem("saved-tracks", []);
+	Interface.showInput("Save Track", "Name this track", "New Track 1", function(results) {
+		if(results != null) {
+			if(localStorage.getItem("savedTracks") == null) {
+				localStorage.setItem("savedTracks", JSON.stringify([]));
 			}
-			var tracks = localStorage.getItem("saved-tracks");
-			tracks[a.value.toLowerCase()] = StepSequence._set;
 			
-			localStorage.setItem("saved-tracks", tracks);
+			var tracks = JSON.parse(localStorage.getItem("savedTracks"));
+			tracks.push(results.value+"||[\/@]/@||"+Mixer._collection.id+"||[\/@]/@||"+JSON.stringify(StepSequence._set));
+									
+			localStorage.setItem("savedTracks", JSON.stringify(tracks));
+			
+			var options = [];
+			options["yes"] = true;
+			
+			Interface.showMessage("Saved", "Your track has been saved!", null, options);
 		}
 	 });
 }

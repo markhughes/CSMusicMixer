@@ -29,6 +29,7 @@ var SoundsLibrary = SoundsLibrary || {};
  * Country
  */
 SoundsLibrary.collection_country = {
+	id: 'country',
     loadcount: -1,
     total: 0,
     sounds: [],
@@ -63,6 +64,7 @@ SoundsLibrary.collection_country = {
  * Dance
  */
 SoundsLibrary.collection_dance = {
+	id: 'dance',
     loadcount: -1,
     total: 0,
     sounds: [],
@@ -97,6 +99,7 @@ SoundsLibrary.collection_dance = {
  * HipHop
  */
 SoundsLibrary.collection_hiphop = {
+	id: 'hiphop',
     loadcount: -1,
     total: 0,
     sounds: [],
@@ -132,6 +135,7 @@ SoundsLibrary.collection_hiphop = {
  * Latin
  */
 SoundsLibrary.collection_latin = {
+	id: 'latin',
     loadcount: -1,
     total: 0,
     sounds: [],
@@ -166,6 +170,7 @@ SoundsLibrary.collection_latin = {
  * Pop
  */
 SoundsLibrary.collection_pop = {
+	id: 'pop',
     loadcount: -1,
     total: 0,
     sounds: [],
@@ -200,6 +205,7 @@ SoundsLibrary.collection_pop = {
  * Rock
  */
 SoundsLibrary.collection_rock = {
+	id: 'rock',
     loadcount: -1,
     total: 0,
     sounds: [],
@@ -239,13 +245,16 @@ SoundsLibrary.load = {
         showStage("main");
         
 		if(typeof(Storage) !== "undefined") {
-			var _items = localStorage.getItem("stored_items");
+			var _items = JSON.parse(localStorage.getItem("savedTracks"));
 			
-			if(_items == null) {
-				
+			if(_items != null) {
+				loadingStatus("Loading existing tracks ... ");
+				//console.log(_items);
+				Mixer.loadExistingTracks();
 			}
+			
+			
 		} else {
-			console.log("[warn] No Storage support, things might break?");
 		}
     },
     loadAll: function() {

@@ -46,3 +46,7 @@ Document.prototype.getElementByClass = function(nameOfClass) {
 		}
 	}
 };
+
+String.prototype.replaceAll = function(find, replace) { 
+	return this.valueOf().toString().replace(new RegExp(find, 'g'), replace);
+};

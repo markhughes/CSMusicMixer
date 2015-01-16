@@ -233,6 +233,11 @@ h1 em {
 	text-decoration: underline;
 }
 
+#storedTracksList {
+	overflow: auto;
+	height: 90px;
+}
+
 /* button suite */
 #button-suite {
 	position: absolute;
@@ -311,16 +316,35 @@ text-decoration: none;
 
 /* alert box stuff */
 #messageBox {
+	position: absolute;
 	font-family:"CG Alpin Gothic No 1";
 	text-align: center;
 	background-image: url(../images/messagebox.png);
 	background-repeat: no-repeat;
 	width: 295px;
 	height: 428px;
-	margin: 0 auto;
-	top: 30px;
+	top: 40px;
+	left: 250px;
+}
+
+#messageBox img {
+	cursor: hand;
 }
 
 #messageBox input {
 	
+}
+
+.no_underflow {
+	margin-bottom: 0px;
+	padding-bottom: 3px;
+}
+
+.no_overflow {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+.removeButton { 
+	color: #ba4141;
 }
