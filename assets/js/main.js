@@ -41,10 +41,16 @@ function openMixer() {
 	showStage("mixer");
 }
 
+function showImport() {
+	var options = [];
+	options["yes"] = true;
+	Interface.showMessage("Not Ready!", "This option isn't ready yet.<br><br>It should be in the next release.", null, options);
+}
+
 /* 
  * License stuff into terminal
  */
-console.log("MyCoke Music Mixer. Licensed under The MIT License (MIT).");
+console.log("Music Mixer. Licensed under The MIT License (MIT).");
 console.log("Copyright (C) 2015  Mark William Hughes");
 console.log("");
 console.log("Use the help() function for help!");

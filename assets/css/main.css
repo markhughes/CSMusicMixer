@@ -195,27 +195,30 @@ h1 em {
 	left: 500px;
 	top: 90px;
 }
-#create_button a {
-	font-size:15px;
-	color:#fff;
-	text-decoration:none
-}
 
-#create_button {
+#huge-button {
+	float:left;
+	margin:10px;
 	text-align:center;
-	width:110px;
-	height:24px;
+	padding: 5px;
+	width:100px;
+	height:23px;
 	background-image:url(../images/button1.png);
-	background-size:cover;
+	background-size: contain;
+	background-repeat: no-repeat;
 	cursor:hand;
 	display: block;
+	
+	font-size:14px;
+	color:#fff;
+	text-decoration:none;
 }
 
-#create_button:hover {
+#huge-button:hover {
 	background-image:url(../images/button1_hover.png)
 }
 
-#create_button:hover > a {
+#huge-button:hover {
 	color:#000
 }
 
