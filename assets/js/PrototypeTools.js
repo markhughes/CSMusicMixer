@@ -50,3 +50,13 @@ Document.prototype.getElementByClass = function(nameOfClass) {
 String.prototype.replaceAll = function(find, replace) { 
 	return this.valueOf().toString().replace(new RegExp(find, 'g'), replace);
 };
+
+Object.prototype.setSelectTo = function(value) {
+	var opts = this.options;
+	for(var opt, j = 0; opt = opts[j]; j++) {
+		if(opt.value == value) {
+			this.selectedIndex = j;
+			break;
+		}
+	}
+}

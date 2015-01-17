@@ -42,12 +42,65 @@ Mixer.removeStored = function (rem) {
 	
 }
 
-Mixer.doLoad = function(collection, trackData) {
+Mixer.doLoad = function(collection, trackData, skipURIDecode) {
+	console.log(collection);
+	
+	var start = new Date();
+	
+	Mixer.setCollection(collection);
+	console.log(trackData);
+	if(skipURIDecode == null) {
+		trackData = (decodeURI(trackData));
+	}
+	
+	trackData = JSON.parse(trackData);
+	
+	// show the mixer so our elements are there
+	showStage("mixer");
+	Mixer.buildBlankRows();
+	
+	var row = 0;
+	
+	trackData.forEach(function (data) {
+		
+		console.log("Loading row " + 0);
+		console.log(data);
+		
+		if(data.length > 0) {
+			console.log('starting this..');
+			data.forEach(function (sample_id) {
+				if(sample_id != "_") {
+					console.log('set sample for row ' +row+' to '+sample_id);
+					Mixer.setSample(sample_id, row);
+					return;
+				}
+			}, this);
+			
+			Mixer.setRow(row);
+			
+			var col = 1;
+			
+			data.forEach(function (sample_id) {
+				if(sample_id != "_") {
+					Mixer.toggle(row, col);
+					console.log("For " + sample_id + " @ row " + row + " we enabled col " + col);
+				}
+				
+				col = col + 1;
+			}, this);
+		}
+		
+		row++;
+	});
+
+	var elapsed = new Date() - start;
+	
 	var options = [];
 	
 	options["yes"] = true;
 	
-	Interface.showMessage("Hi", "Your track data WAS saved.<br>I just can't load it yet!<br><br>You should be able to do this<br>in the next release.", null, options);
+	// Interface.showMessage("Loaded!", "The track has been loaded in " + elapsed + "ms", null, options);
+	
 }
 
 
@@ -59,7 +112,6 @@ Mixer.loadExistingTracks = function() {
 	JSON.parse(localStorage.getItem("savedTracks")).forEach(function (a) {
 		var splitUp = a.split("||[\/@]/@||");
 		built+= "<li><a href=\"#\" onclick=\"Mixer.doLoad('"+encodeURI(splitUp[1])+"', '"+encodeURI(splitUp[2])+"');\">"+splitUp[0]+"</a> <a href=\"#\" onclick=\"Mixer.removeStored("+JSON.parse(localStorage.getItem("savedTracks")).indexOf(a)+");\" class=\"removeButton\">X</a></li>";
-		console.log(a);
 		Mixer.currentI++;
 	});
 	
@@ -74,6 +126,9 @@ Mixer.loadExistingTracks = function() {
 
 Mixer.setSample = function(sample_id, slot) {
 	Mixer._slots[slot] = sample_id;
+	document.getElementById("row"+slot+"_option").setSelectTo(sample_id);
+	
+	
 }
 
 Mixer.setCollection = function(collection) {
@@ -144,7 +199,7 @@ Mixer.buildBlankRows = function() {
 '					<select id="row%i%_option" onchange="Mixer.changeSampleAtRow(%i%)">'+
 '						<option value="_" selected=""></option>'+
 '						OptionsReplacer'+
-'					</select>'+
+'					</select><br><input class="volumeSlider" type="range" min="1" max="100" value="100" id="volume_%i%" onchange="Mixer.changeVolume(%i%, this.value);">'+
 '				</div>'+
 '				<div id="rightbox" class="rightbox-%i%"></div>'+
 '			</div>';
@@ -154,7 +209,9 @@ Mixer.buildBlankRows = function() {
 	var options = '';
 	
 	for (var key in Mixer._collection_sounds) {
-		options+= '<option value="'+key+'">'+key+'</option>';
+		if(key != "setSelectTo") {
+			options+= '<option value="'+key+'">'+key+'</option>';
+		}
 	}	
 	row_template = row_template.replace(new RegExp("OptionsReplacer", 'g'), options);
 	
@@ -178,6 +235,8 @@ Mixer.setRow = function(row) {
 
 Mixer.toggle = function(row, tab) {
 	var tab = document.getElementById("s_"+row+"_"+tab);
+	
+	if(tab == null) return;
 	
 	if(tab.getAttribute("selected") == "0") {
 		tab.setAttribute("selected", "1");
@@ -238,4 +297,38 @@ Mixer.save = function() {
 			Interface.showMessage("Saved", "Your track has been saved!", null, options);
 		}
 	 });
+}
+
+Mixer.share = function() {
+	window.lzmalib.compress(
+		JSON.stringify(Mixer._collection.id+"||[\/@]/@||"+JSON.stringify(StepSequence._set)), 1,
+		function on_compress_complete(str) {
+			var options = [];
+			options["yes"] = true;
+			
+			var content = "Here is your share key:<br>" + str.toString().replaceAll(",", " ");
+			Interface.showMessage("Share this!", content, null, options);
+			console.log("done: " + str.toString().replaceAll(",", " "));
+		}
+	);
+}
+
+Mixer.doImport = function(str) {
+	showStage("load");
+	
+	loadingStatus("Loading track ...");
+	
+	window.lzmalib.decompress(str.split(" "), function on_decompress_complete(str) {
+		var data = str.split("||[/@]/@||");		
+		showStage("mixer");
+		var filtered_string = data[1].replace(/\\"/g,'"');
+		
+		Mixer.doLoad(data[0].substring(1), filtered_string.substring(0, filtered_string.length-1), true);		
+	});
+}
+
+
+
+Mixer.changeVolume = function(row, value) {
+	Mixer._collection_sounds[Mixer.getSample(row)].volume = value / 100;
 }

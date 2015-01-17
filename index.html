@@ -61,6 +61,8 @@
 				<a id="smallButton" href="javascript:;" onclick="Mixer.clearAll();">Clear</a>
 				<a id="smallButton" href="javascript:;" onclick="Mixer.save();">Save</a>
 				<a id="smallButton" href="javascript:;" onclick="Mixer.share();">Share</a>
+				<a id="smallButton" href="javascript:;" onclick="showStage('main');">Back</a>
+				
 				
 			</div>
 						
@@ -77,7 +79,7 @@
 		<script>
 			var require = {
 				deps: [		"assets/js/SoundsLibrary.js", "assets/js/StepSequence.js", "assets/js/Mixer.js", "assets/js/Interface.js",
-							"assets/js/Txt.js","assets/js/PrototypeTools.js", "assets/js/main.js"],
+							"assets/js/LZMA.js", "assets/js/Txt.js","assets/js/PrototypeTools.js", "assets/js/main.js"],
 				callback: function(module1, module2) {
 					window.addEventListener("load", new function() {
 						loadingStatus("Loading ...");

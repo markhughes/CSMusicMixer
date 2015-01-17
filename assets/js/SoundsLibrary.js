@@ -242,6 +242,8 @@ SoundsLibrary.collection_rock = {
  */
 SoundsLibrary.load = {
     loadComplete: function() {
+        window.lzmalib = new LZMA("assets/js/lzma_worker.js");
+        
         showStage("main");
         
 		if(typeof(Storage) !== "undefined") {
