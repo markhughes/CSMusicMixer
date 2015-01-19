@@ -315,6 +315,14 @@ text-decoration: none;
 	color: #d33131;
 }
 
+[selected|="0"] {
+}
+
+[selected|="1"] {
+    content: url('../images/1px.gif');
+    background-image: url(../images/tabs/2s_clear_enabled.png);
+}
+
 
 
 /* alert box stuff */
