@@ -152,11 +152,13 @@ Mixer.getLengthInSeconds = function(row) {
 	if(dur == 8) dur = 10;
 	if(dur == 7) dur = 10;
 	
+	if(dur < 2) dur = 2;
+	
 	return dur;
 }
 
 Mixer.getStepsLayout = function(row, size) {
-	if(size == 2) {
+	if(size <= 2) {
 		var str = "<img id='s_"+row+"_%i%' src='assets/images/tabs/2s_clear.png' onclick='Mixer.toggle("+row+", %i%)' alt='' width='18' height='36' selected='0'>";
 		return(str.repeat(30));
 	}
