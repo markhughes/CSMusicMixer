@@ -94,11 +94,17 @@ Mixer.loadExistingTracks = function() {
 	
 	Mixer.currentI = 0;
 	
-	JSON.parse(localStorage.getItem("savedTracks")).forEach(function (a) {
-		var splitUp = a.split("||[\/@]/@||");
-		built+= "<li><a href=\"#\" onclick=\"Mixer.doLoad('"+encodeURI(splitUp[1])+"', '"+encodeURI(splitUp[2])+"');\">"+splitUp[0]+"</a> <a href=\"#\" onclick=\"Mixer.removeStored("+JSON.parse(localStorage.getItem("savedTracks")).indexOf(a)+");\" class=\"removeButton\">X</a></li>";
-		Mixer.currentI++;
-	});
+	if(localStorage.getItem("savedTracks") != null) {
+		var st = JSON.parse(localStorage.getItem("savedTracks"))
+		
+		st.forEach(function (a) {
+			var splitUp = a.split("||[\/@]/@||");
+			
+			built+= "<li><a href=\"#\" onclick=\"Mixer.doLoad('"+encodeURI(splitUp[1])+"', '"+encodeURI(splitUp[2])+"');\">"+splitUp[0]+"</a> <a href=\"#\" onclick=\"Mixer.removeStored("+JSON.parse(localStorage.getItem("savedTracks")).indexOf(a)+");\" class=\"removeButton\">X</a></li>";
+			
+			Mixer.currentI++;
+		});
+	}
 	
 	built+= "</ul>";
 	
@@ -144,6 +150,7 @@ Mixer.getSound = function(row) {
 Mixer.getLengthInSeconds = function(row) {
 	var dur = Math.floor(this.getSound(row).duration);
 	if(dur == 8) dur = 10;
+	if(dur == 7) dur = 10;
 	
 	return dur;
 }

@@ -82,11 +82,13 @@
 		</div>
 		
 		<script>
+			var v = 1;
+			
 			var require = {
-				deps: [		"packs.js",
-							"assets/js/PrototypeTools.js", "assets/js/LZMA.js", "assets/js/Txt.js", 
-							"assets/js/StepSequence.js", "assets/js/Mixer.js", "assets/js/Interface.js", "assets/js/Packs.js",
-							"assets/js/main.js",
+				deps: [		"packs.js?"+new Date(),
+							"assets/js/PrototypeTools.js?"+v, "assets/js/LZMA.js?"+v, "assets/js/Txt.js?"+v, 
+							"assets/js/StepSequence.js?"+v, "assets/js/Mixer.js?"+v, "assets/js/Interface.js?"+v, "assets/js/Packs.js?"+v,
+							"assets/js/main.js?"+v,
 						],
 				callback: function(module1, module2) {
 					window.addEventListener("load", new function() {
