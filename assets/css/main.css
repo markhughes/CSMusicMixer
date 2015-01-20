@@ -415,3 +415,74 @@ input[type=range]::-moz-range-track {
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
+
+.trackID {
+	font-family:"CG Alpin Gothic No 1";
+    background-color:rgba(0, 0, 0, 0);
+    color: #000000;
+    border: none;
+    outline: none;
+    height: 15px;
+    font-size: 14px;
+}
+
+#packs-area {
+	position: absolute;
+	left: 20px;
+	top: 370px;
+	height: 80px;
+	width: 780px;
+	
+}
+
+#packs-list {
+	position: absolute;
+	height: 80px;
+	width: 320px;
+}
+
+#packs-data {
+	float: left;
+	margin-left: 330px;
+	height: 80px;
+	width: 450px;
+	overflow-y: scroll;
+}
+
+.trackname {
+	float: left;
+	display: block;
+	cursor: hand;
+	padding: 5px;
+	margin: 6px;
+	font-family:"CG Alpin Gothic No 1";
+	background-color: #c90808;
+	color: #fff;
+	width: 25%;
+	
+	opacity:.75;
+	filter:alpha(opacity=75)
+}
+
+.trackname:hover {
+	background-color: #a20404;
+}
+
+.packname {
+	float: left;
+	display: block;
+	cursor: hand;
+	padding: 5px;
+	margin: 6px;
+	font-family:"CG Alpin Gothic No 1";
+	background-color: #000;
+	color: #fff;
+	width: 25%;
+	
+	opacity:.75;
+	filter:alpha(opacity=75)
+}
+
+.packname:hover {
+	background-color: #c1a371;
+}

@@ -47,6 +47,9 @@ function showImport() {
 	Interface.showMessage("Not Ready!", "This option isn't ready yet.<br><br>It should be in the next release.", null, options);
 }
 
+function loadPack(p) {
+	
+}
 /* 
  * License stuff into terminal
  */

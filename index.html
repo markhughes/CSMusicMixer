@@ -19,12 +19,12 @@
 			<div id="right_bar">
 				<h1>create something <em>fresh</em></h1> 
 				<ul>
-					<li><a href="#" onclick="Mixer.setCollection('country');" class="country_class">Country</a></li>
-					<li><a href="#" onclick="Mixer.setCollection('dance');" class="dance_class">Dance</a></li>
-					<li><a href="#" onclick="Mixer.setCollection('hiphop');" class="hiphop_class">Hip-Hop</a></li>
-					<li><a href="#" onclick="Mixer.setCollection('latin');" class="latin_class">Latin</a></li>
-					<li><a href="#" onclick="Mixer.setCollection('pop');" class="pop_class">Pop</a></li>
-					<li><a href="#" onclick="Mixer.setCollection('rock');" class="rock_class">Rock</a></li>
+					<li><a href="#" onclick="Mixer.setPack('Country');" class="Country_class">Country</a></li>
+					<li><a href="#" onclick="Mixer.setPack('Dance');" class="Dance_class">Dance</a></li>
+					<li><a href="#" onclick="Mixer.setPack('Hip-Hop');" class="Hip-Hop_class">Hip-Hop</a></li>
+					<li><a href="#" onclick="Mixer.setPack('Latin');" class="Latin_class">Latin</a></li>
+					<li><a href="#" onclick="Mixer.setPack('Pop');" class="Pop_class">Pop</a></li>
+					<li><a href="#" onclick="Mixer.setPack('Rock');" class="Rock_class">Rock</a></li>
 				</ul>
 				
 				<a id="huge-button" href="#" onclick="openMixer()">START MIXING</a>
@@ -47,25 +47,20 @@
 				</p>
 				
 			</div>
-			
-
-		
 		</div>
 		
 		<div class="stage" id="mixer">
 			<div id="backmixer">
 				<img src="assets/images/mixer.png" width="750">
 			</div>
+			
 			<div id="button-suite">
 				<a id="playButton" class="s_stopped" href="javascript:;" onclick="Mixer.playStopButton();" state="stopped"></a>
 				<a id="smallButton" href="javascript:;" onclick="Mixer.clearAll();">Clear</a>
 				<a id="smallButton" href="javascript:;" onclick="Mixer.save();">Save</a>
 				<a id="smallButton" href="javascript:;" onclick="Mixer.share();">Share</a>
 				<a id="smallButton" href="javascript:;" onclick="showStage('main');">Back</a>
-				
-				
 			</div>
-						
 			
 			<div id="rows-collection"></div>
 			<div id="timeline-container" style="position: absolute; top: 92px; left: 220px;">
@@ -74,18 +69,38 @@
 				<span id="timeline-seconds">0s</span>
 				
 			</div>
+			
+			<div id="packs-area">
+				<div id="packs-list">
+					
+				</div>
+				
+				<div id="packs-data">
+					
+				</div>
+			</div>
 		</div>
 		
 		<script>
 			var require = {
-				deps: [		"assets/js/SoundsLibrary.js", "assets/js/StepSequence.js", "assets/js/Mixer.js", "assets/js/Interface.js",
-							"assets/js/LZMA.js", "assets/js/Txt.js","assets/js/PrototypeTools.js", "assets/js/main.js"],
+				deps: [		"packs.js",
+							"assets/js/PrototypeTools.js", "assets/js/LZMA.js", "assets/js/Txt.js", 
+							"assets/js/StepSequence.js", "assets/js/Mixer.js", "assets/js/Interface.js", "assets/js/Packs.js",
+							"assets/js/main.js",
+						],
 				callback: function(module1, module2) {
 					window.addEventListener("load", new function() {
 						loadingStatus("Loading ...");
+						
 						showStage("load");
-						SoundsLibrary.load.loadAll();
-					
+						
+						window.lzmalib = new LZMA("assets/js/lzma_worker.js");
+						
+						InstalledPacks.forEach(function (a) {
+							Packs.prepared++;
+							Packs.loadPack("packs/"+a+"/"+a+".js");
+						});
+							
 					});
 				}
 			};

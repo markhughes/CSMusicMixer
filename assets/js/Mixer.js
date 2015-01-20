@@ -26,8 +26,6 @@
 var Mixer = Mixer || {};
 
 Mixer._slots = [];
-Mixer._collection = {};
-Mixer._collection_sounds = [];
 
 Mixer.removeStored = function (rem) {
 	var workingWith = JSON.parse(localStorage.getItem("savedTracks"));
@@ -42,13 +40,13 @@ Mixer.removeStored = function (rem) {
 	
 }
 
-Mixer.doLoad = function(collection, trackData, skipURIDecode) {
-	console.log(collection);
-	
+Mixer.doLoad = function(collection, trackData, skipURIDecode) {	
 	var start = new Date();
+	showStage("mixer");
 	
-	Mixer.setCollection(collection);
-	console.log(trackData);
+	Mixer.setPack(collection);
+	
+	
 	if(skipURIDecode == null) {
 		trackData = (decodeURI(trackData));
 	}
@@ -56,21 +54,15 @@ Mixer.doLoad = function(collection, trackData, skipURIDecode) {
 	trackData = JSON.parse(trackData);
 	
 	// show the mixer so our elements are there
-	showStage("mixer");
+	
 	Mixer.buildBlankRows();
 	
 	var row = 0;
 	
 	trackData.forEach(function (data) {
-		
-		console.log("Loading row " + 0);
-		console.log(data);
-		
 		if(data.length > 0) {
-			console.log('starting this..');
 			data.forEach(function (sample_id) {
-				if(sample_id != "_") {
-					console.log('set sample for row ' +row+' to '+sample_id);
+				if(sample_id != "_" && sample_id != "") {
 					Mixer.setSample(sample_id, row);
 					return;
 				}
@@ -83,7 +75,6 @@ Mixer.doLoad = function(collection, trackData, skipURIDecode) {
 			data.forEach(function (sample_id) {
 				if(sample_id != "_") {
 					Mixer.toggle(row, col);
-					console.log("For " + sample_id + " @ row " + row + " we enabled col " + col);
 				}
 				
 				col = col + 1;
@@ -92,14 +83,8 @@ Mixer.doLoad = function(collection, trackData, skipURIDecode) {
 		
 		row++;
 	});
-
-	var elapsed = new Date() - start;
-	
-	var options = [];
-	
-	options["yes"] = true;
-	
-	// Interface.showMessage("Loaded!", "The track has been loaded in " + elapsed + "ms", null, options);
+			
+	Interface.showMessage("Loaded!", "The track has been loaded in " + (new Date() - start) + "ms", null, {yes : true});
 	
 }
 
@@ -124,48 +109,40 @@ Mixer.loadExistingTracks = function() {
 	document.getElementById("storedTracksList").innerHTML = built;
 }
 
-Mixer.setSample = function(sample_id, slot) {
-	Mixer._slots[slot] = sample_id;
-	document.getElementById("row"+slot+"_option").setSelectTo(sample_id);
-	
-	
-}
-
-Mixer.setCollection = function(collection) {
-	var cname = collection;
-	
-	if     (collection == "country")	collection = SoundsLibrary.collection_country;
-	else if(collection == "dance")		collection = SoundsLibrary.collection_dance;
-	else if(collection == "hiphop")		collection = SoundsLibrary.collection_hiphop;
-	else if(collection == "latin")		collection = SoundsLibrary.collection_latin;
-	else if(collection == "pop") 		collection = SoundsLibrary.collection_pop;
-	else if(collection == "rock")		collection = SoundsLibrary.collection_rock;
-	else    							collection = null;
-	
-	Mixer._collection = collection;
-	Mixer._collection_sounds = collection.sounds;
-	
-	document.getElementByClass("country_class").style.color	= '#000000';
-	document.getElementByClass("dance_class").style.color	= '#000000';
-	document.getElementByClass("hiphop_class").style.color	= '#000000';
-	document.getElementByClass("latin_class").style.color	= '#000000';
-	document.getElementByClass("pop_class").style.color		= '#000000';
-	document.getElementByClass("rock_class").style.color	= '#000000';
-	
-	document.getElementByClass(cname+"_class").style.color = 'red';
+Mixer.setSample = function(sample_id, row) {
+	Mixer._slots[row] = sample_id;
+	document.getElementById("row"+row+"_option").value = Packs.soundLabels[sample_id];
+	document.getElementById("row"+row+"_option").setAttribute("sample_id", sample_id);
 	
 }
 
-Mixer.getSample = function(slot) {
-	return Mixer._slots[slot];
+Mixer.setPack = function(pack) {
+	
+	document.getElementByClass("Country_class").style.color	= '#000000';
+	document.getElementByClass("Dance_class").style.color	= '#000000';
+	document.getElementByClass("Hip-Hop_class").style.color	= '#000000';
+	document.getElementByClass("Latin_class").style.color	= '#000000';
+	document.getElementByClass("Pop_class").style.color		= '#000000';
+	document.getElementByClass("Rock_class").style.color	= '#000000';
+	
+	if(document.getElementByClass(pack+"_class") != null) {
+		document.getElementByClass(pack+"_class").style.color = 'red';
+	}
+	
+	Packs.show(pack);
+	
 }
 
-Mixer.getSound = function(slot) {
-	return this._collection_sounds[this._slots[slot]];
+Mixer.getSample = function(row) {
+	return Mixer._slots[row];
 }
 
-Mixer.getLengthInSeconds = function(slot) {
-	var dur = Math.floor(this.getSound(slot).duration);
+Mixer.getSound = function(row) {
+	return Packs.audioObjects[this._slots[row]];
+}
+
+Mixer.getLengthInSeconds = function(row) {
+	var dur = Math.floor(this.getSound(row).duration);
 	if(dur == 8) dur = 10;
 	
 	return dur;
@@ -195,25 +172,13 @@ Mixer.buildBlankRows = function() {
 	
 	var row_template = ''+
 '			<div id="row" class="row%i% two">'+
-'				<div id="leftbox">'+
-'					<select id="row%i%_option" onchange="Mixer.changeSampleAtRow(%i%)">'+
-'						<option value="_" selected=""></option>'+
-'						OptionsReplacer'+
-'					</select><br><input class="volumeSlider" type="range" min="1" max="100" value="100" id="volume_%i%" onchange="Mixer.changeVolume(%i%, this.value);">'+
+'				<div id="leftbox" ondrop="Mixer.droppedOn(event)" ondragover="event.preventDefault();" row="%i%">'+
+'					<input id="row%i%_option" class="trackID" disabled value="" row="%i%">'+
+'					<br row="%i%">'+
+'					<input class="volumeSlider" type="range" min="1" max="100" value="100" id="volume_%i%" onchange="Mixer.changeVolume(%i%, this.value);" row="%i%">'+
 '				</div>'+
 '				<div id="rightbox" class="rightbox-%i%"></div>'+
 '			</div>';
-			
-	
-	// First, generate the options
-	var options = '';
-	
-	for (var key in Mixer._collection_sounds) {
-		if(key != "setSelectTo") {
-			options+= '<option value="'+key+'">'+key+'</option>';
-		}
-	}	
-	row_template = row_template.replace(new RegExp("OptionsReplacer", 'g'), options);
 	
 	var i = 0;
 	while(i < 6) {
@@ -251,7 +216,7 @@ Mixer.toggle = function(row, tab) {
 }
 
 Mixer.changeSampleAtRow = function(row) {
-	this.setSample(document.getElementById("row"+row+"_option").value, row);
+	Mixer.setSample(document.getElementById("row"+row+"_option").value, row);
 	Mixer.setRow(row);
 }
 
@@ -269,14 +234,23 @@ Mixer.playStopButton = function() {
 }
 
 Mixer.clearAll = function() {
+	StepSequence.stop();
 	Mixer.buildBlankRows();
+	
+	StepSequence._set[0] = [];
+	StepSequence._set[1] = [];
+	StepSequence._set[2] = [];
+	StepSequence._set[3] = [];
+	StepSequence._set[4] = [];
+	StepSequence._set[5] = [];
+	
 	StepSequence.buildSequence(); // Make sure we rebuild the sequence, otherwise it's still store in code
 	
 	// force stop the song just in case its playing
 	document.getElementById("playButton").setAttribute("src", "assets/images/play.png");
 	document.getElementById("playButton").setAttribute("class", "s_stopped");
 	document.getElementById("playButton").setAttribute("state", "stopped");
-	StepSequence.stop();
+
 }
 
 Mixer.save = function() {
@@ -287,7 +261,7 @@ Mixer.save = function() {
 			}
 			
 			var tracks = JSON.parse(localStorage.getItem("savedTracks"));
-			tracks.push(results.value+"||[\/@]/@||"+Mixer._collection.id+"||[\/@]/@||"+JSON.stringify(StepSequence._set));
+			tracks.push(results.value+"||[\/@]/@||"+0+"||[\/@]/@||"+JSON.stringify(StepSequence._set));
 									
 			localStorage.setItem("savedTracks", JSON.stringify(tracks));
 			
@@ -301,14 +275,13 @@ Mixer.save = function() {
 
 Mixer.share = function() {
 	window.lzmalib.compress(
-		JSON.stringify(Mixer._collection.id+"||[\/@]/@||"+JSON.stringify(StepSequence._set)), 1,
+		JSON.stringify(0+"||[\/@]/@||"+JSON.stringify(StepSequence._set)), 1,
 		function on_compress_complete(str) {
 			var options = [];
 			options["yes"] = true;
 			
 			var content = "Here is your share key:<br>" + str.toString().replaceAll(",", " ");
 			Interface.showMessage("Share this!", content, null, options);
-			console.log("done: " + str.toString().replaceAll(",", " "));
 		}
 	);
 }
@@ -330,5 +303,11 @@ Mixer.doImport = function(str) {
 
 
 Mixer.changeVolume = function(row, value) {
-	Mixer._collection_sounds[Mixer.getSample(row)].volume = value / 100;
+	Packs.getSound(Mixer.getSample(row)).volume = value / 100;
+}
+
+Mixer.droppedOn = function(event) {
+	document.getElementById("row"+event.toElement.getAttribute("row")+"_option").value = window.dragID;
+	
+	Mixer.changeSampleAtRow(event.toElement.getAttribute("row"));
 }
