@@ -53,36 +53,23 @@ StepSequence.playRow = function(row) {
 StepSequence.playPointer = function(row, at) {
 	if( (StepSequence._set[row].length-1) < 0 ) return;
 	
-	console.log(row + ":  [  play pointer start  ]");
-	console.log(row + ": current step is " + at + "/" + (StepSequence._set[row].length-1));
-	console.log(row + ": full row is " + StepSequence._set[row]);
-	
 	// Ensure there is a step here
 	if(StepSequence._set[row][at] != "_" && StepSequence._set[row][at] != "") {
-		// Play it! 
-		console.log(row + ": step is not blank, playing ");
-		
+		// Play it! 		
 		StepSequence.objs[StepSequence.objCounts] = Packs.getSound(Mixer.getSample(row)).cloneNode(true);
 		
 		StepSequence.objs[StepSequence.objCounts].play();
 		StepSequence.objCounts++;
-		
-		console.log(Packs.audioObjects[Mixer.getSample(row)].src);
-	} else {
-		console.log(row + ": empty step ");;
 	}
 	
 	// Check we're not at the end
 	if(StepSequence._set[row].length-1 > at++) {
 		// Prepare to run this function again @ the delay (in seconds)
-		console.log(row + ": re-running in " + Mixer.getLengthInSeconds(row) + " seconds ...");
-		console.log(row + ":  [  row tbc  ]");
 		StepSequence._timers[row] = setTimeout(function() {
 			StepSequence.playPointer(row, at++);
 		}, (Mixer.getLengthInSeconds(row)*1000))
 	} else {
 		StepSequence._timers[row] = null;
-		console.log(row + ":  [  row end  ]");
 	}
 }
 
@@ -200,7 +187,6 @@ StepSequence.stop = function() {
 	if(StepSequence._timers[3] != null) clearTimeout(StepSequence._timers[3]);
 	if(StepSequence._timers[4] != null) clearTimeout(StepSequence._timers[4]);
 	if(StepSequence._timers[5] != null) clearTimeout(StepSequence._timers[5]);
-	
 
 	StepSequence.objs.forEach(function (o) { o.pause(); });
 
@@ -218,19 +204,4 @@ StepSequence.stop = function() {
 	
 	document.getElementById("timeline-container").style.left = "220px";
 	document.getElementById("timeline-seconds").innerHTML = "0s";
-}
-
-StepSequence.test = function() {
-	var track = [];
-	
-	track[0]		= ["misc_shaker00", "misc_shaker00", "misc_shaker00", "misc_shaker00", "misc_shaker00", "misc_shaker00", "misc_shaker00"];
-	track[1]		= ["_", "_", "danceOne_beatz01", "danceOne_beatz01", "_", "danceOne_beatz01"];
-	track[2]		= ["_", "_", "_", "_", "_", "_", "_", "_", "danceOne_beatz00", "danceOne_beatz00", "_", "_", "danceOne_beatz00"];
-	track[3]		= ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "danceTwo_strings00", "_", "danceTwo_strings00"];
-	
-	
-	StepSequence.set(track);
-	
-	//StepSequence.playTrack();
-	
 }
