@@ -82,7 +82,7 @@
 		</div>
 		
 		<script>
-			var v = 1;
+			var v = 1.2;
 			
 			var require = {
 				deps: [		"packs.js?"+new Date(),
@@ -100,7 +100,7 @@
 						
 						InstalledPacks.forEach(function (a) {
 							Packs.prepared++;
-							Packs.loadPack("packs/"+a+"/"+a+".js");
+							Packs.loadPack("packs/"+a+"/"+a+".js?"+v);
 						});
 							
 					});
