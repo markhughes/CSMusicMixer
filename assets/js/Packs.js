@@ -165,17 +165,8 @@ Packs.checkReady = function() {
 	if(Packs.soundsReady == Packs.soundsTotal && Packs.loaded == Packs.prepared) {
 		Mixer.loadExistingTracks();
 		
-		// This is an attempt to add support for IE browsers
-		// ... even though they don't support most HTML5 things.
-		
-		/*@cc_on
-			@if (@_jscript_version <= 6)
-				(function(f){
-					window.setTimeout =f(window.setTimeout);
-					window.setInterval =f(window.setInterval);
-				})(function(f){return function(c,t){var a=[].slice.call(arguments,2);return f(function(){c.apply(this,a)},t)}});
-			@end
-		@*/
+		// This is attempting to fix issues with cross-browser stuff
+		runFixes();
 		
 		setTimeout(function() {
 			showStage("main");
@@ -217,6 +208,10 @@ Packs.show = function(pack) {
 	
 	document.getElementById("packs-data").innerHTML = master_template;
 	
+	if(runFixes != null) {
+		runFixes(); // run this again to fix dnd issues with certain browsers 
+	}
+	
 };
 
 /**
@@ -242,5 +237,6 @@ Packs.buildList = function() {
  */
 Packs.preview = function(sound) {
 	window.previewSound = this.getSound(sound);
+	window.previewSound.currentTime = 0;
 	window.previewSound.play();
 };

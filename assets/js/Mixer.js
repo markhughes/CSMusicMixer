@@ -338,3 +338,4 @@ Mixer.droppedOn = function(event) {
 	
 	Mixer.changeSampleAtRow(event.toElement.getAttribute("row"));
 }
+

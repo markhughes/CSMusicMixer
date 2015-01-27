@@ -469,7 +469,7 @@ input[type=range]::-moz-range-track {
 	width: 25%;
 	
 	opacity:.75;
-	filter:alpha(opacity=75)
+	filter:alpha(opacity=75);
 }
 
 .trackname:hover {
@@ -493,4 +493,8 @@ input[type=range]::-moz-range-track {
 
 .packname:hover {
 	background-color: #c1a371;
+}
+
+[draggable=true] {
+  -khtml-user-drag: element;
 }

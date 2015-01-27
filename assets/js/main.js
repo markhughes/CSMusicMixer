@@ -47,9 +47,28 @@ function showImport() {
 	Interface.showMessage("Not Ready!", "This option isn't ready yet.<br><br>It should be in the next release.", null, options);
 }
 
-function loadPack(p) {
+function runFixes() {
+	// IE Fixes 
+	/*@cc_on
+		@if (@_jscript_version <= 6)
+			(function(f){
+				window.setTimeout =f(window.setTimeout);
+				window.setInterval =f(window.setInterval);
+			})(function(f){return function(c,t){var a=[].slice.call(arguments,2);return f(function(){c.apply(this,a)},t)}});
+		@end
+	@*/
+		
+	// Firefox Fix 
+	var dragItems = document.querySelectorAll("[draggable=true]");
+	for(var i = 0; i < dragItems.length; i++) {
+		addEvent(dragItems[i], "dragstart", function (event) {
+			event.dataTransfer.setData("Text", this.id);
+		});
+	}
 	
+	window.previewSound = new Audio();
 }
+
 /* 
  * License stuff into terminal
  */
