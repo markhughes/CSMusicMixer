@@ -46,6 +46,12 @@ Packs.soundsPaths = [];
 Packs.soundLabels = [];
 
 /**
+ * A simple lookup of all the default track data
+ */
+Packs.defaultTracks = [];
+
+
+/**
  * Sets the sound path for a pack
  *  pack: 		the unqiue pack name
  *  path:		a path to where the sounds are
@@ -87,6 +93,13 @@ Packs.addSound = function(soundData) {
 	this.collection[soundData.pack_id].push(id);
 	
 	this.soundLabels[id] = soundData.label;
+};
+
+/**
+ * Sets the basic pack data for a pack
+ */
+Packs.setDefaultTrack = function(pack, data) {
+	this.defaultTracks[pack] = data;
 };
 
 
@@ -171,6 +184,9 @@ Packs.audioReady = function() {
 	Packs.checkReady();
 };
 
+/**
+ * Shows a pack, builds pack data. 
+ */
 Packs.show = function(pack) {
 	if(Packs.collection[pack] == null) return;
 	
@@ -186,8 +202,12 @@ Packs.show = function(pack) {
 	});
 	
 	document.getElementById("packs-data").innerHTML = master_template;
+	
 };
 
+/**
+ * Builds the collections list 
+ */
 Packs.buildList = function() {
 	var template = "<span class=\"packname\" onclick=\"Packs.show('%name%');\">%name%</span>";
 	var master_template = "";
@@ -201,9 +221,12 @@ Packs.buildList = function() {
 	
 	document.getElementById("packs-list").innerHTML = master_template;
 
-}
+};
 
+/**
+ * Starts a preview for a sound
+ */
 Packs.preview = function(sound) {
 	window.previewSound = this.getSound(sound);
 	window.previewSound.play();
-}
+};
