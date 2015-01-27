@@ -37,7 +37,7 @@ function showStage(stage) {
 
 function openMixer() {
 	Mixer.buildBlankRows();
-	
+	Mixer.importDefaultForPack(Mixer.currentPack);
 	showStage("mixer");
 }
 

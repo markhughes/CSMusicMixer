@@ -27,6 +27,8 @@ var Mixer = Mixer || {};
 
 Mixer._slots = [];
 
+Mixer.currentPack = null;
+
 Mixer.removeStored = function (rem) {
 	var workingWith = JSON.parse(localStorage.getItem("savedTracks"));
 	
@@ -40,8 +42,9 @@ Mixer.removeStored = function (rem) {
 	
 }
 
-Mixer.doLoad = function(collection, trackData, skipURIDecode) {	
+Mixer.doLoad = function(collection, trackData, skipURIDecode, silent) {	
 	var start = new Date();
+	
 	showStage("mixer");
 	
 	Mixer.setPack(collection);
@@ -73,7 +76,7 @@ Mixer.doLoad = function(collection, trackData, skipURIDecode) {
 			var col = 1;
 			
 			data.forEach(function (sample_id) {
-				if(sample_id != "_") {
+				if(sample_id != "_" && sample_id != "") {
 					Mixer.toggle(row, col);
 				}
 				
@@ -83,7 +86,9 @@ Mixer.doLoad = function(collection, trackData, skipURIDecode) {
 		
 		row++;
 	});
-			
+	
+	if(silent != null) return;
+	
 	Interface.showMessage("Loaded!", "The track has been loaded in " + (new Date() - start) + "ms", null, {yes : true});
 	
 }
@@ -136,6 +141,8 @@ Mixer.setPack = function(pack) {
 	}
 	
 	Packs.show(pack);
+	Mixer.currentPack = pack;
+	
 	
 }
 
@@ -289,7 +296,7 @@ Mixer.share = function() {
 			var options = [];
 			options["yes"] = true;
 			
-			var content = "Here is your share key:<br>" + str.toString().replaceAll(",", " ");
+			var content = "Here is your share key:<br><textarea name=\"textarea\" rows=\"10\" cols=\"40\">" + str.toString().replaceAll(",", " ") + "</textarea>";
 			Interface.showMessage("Share this!", content, null, options);
 		}
 	);
@@ -309,6 +316,17 @@ Mixer.doImport = function(str) {
 	});
 }
 
+Mixer.importDefaultForPack = function(pack) {
+	if(Packs.defaultTracks[pack] == null) return;
+	
+	window.lzmalib.decompress(Packs.defaultTracks[pack].split(" "), function on_decompress_complete(str) {
+		var data = str.split("||[/@]/@||");		
+		showStage("mixer");
+		var filtered_string = data[1].replace(/\\"/g,'"');
+		
+		Mixer.doLoad(data[0].substring(1), filtered_string.substring(0, filtered_string.length-1), true, true);		
+	});
+}
 
 
 Mixer.changeVolume = function(row, value) {
