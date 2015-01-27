@@ -164,9 +164,23 @@ Packs.loadComplete = function() {
 Packs.checkReady = function() {
 	if(Packs.soundsReady == Packs.soundsTotal && Packs.loaded == Packs.prepared) {
 		Mixer.loadExistingTracks();
-		showStage("main");
-		Packs.buildList();
 		
+		// This is an attempt to add support for IE browsers
+		// ... even though they don't support most HTML5 things.
+		
+		/*@cc_on
+			@if (@_jscript_version <= 6)
+				(function(f){
+					window.setTimeout =f(window.setTimeout);
+					window.setInterval =f(window.setInterval);
+				})(function(f){return function(c,t){var a=[].slice.call(arguments,2);return f(function(){c.apply(this,a)},t)}});
+			@end
+		@*/
+		
+		setTimeout(function() {
+			showStage("main");
+			Packs.buildList();
+		});
 	}
 };
 
