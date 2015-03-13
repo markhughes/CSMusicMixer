@@ -56,8 +56,8 @@ StepSequence.playPointer = function(row, at) {
 	// Ensure there is a step here
 	if(StepSequence._set[row][at] != "_" && StepSequence._set[row][at] != "") {
 		// Play it! 		
-		StepSequence.objs[StepSequence.objCounts] = Packs.getSound(Mixer.getSample(row)).cloneNode(true);
-		
+		StepSequence.objs[StepSequence.objCounts] = Packs.getSound(Mixer.getSample(row));
+				
 		StepSequence.objs[StepSequence.objCounts].play();
 		StepSequence.objCounts++;
 	}

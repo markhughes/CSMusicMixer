@@ -155,7 +155,7 @@ Mixer.getSound = function(row) {
 }
 
 Mixer.getLengthInSeconds = function(row) {
-	var dur = Math.floor(this.getSound(row).duration);
+	var dur = Math.floor(this.getSound(row).durationEstimate/1000);
 	if(dur == 8) dur = 10;
 	if(dur == 7) dur = 10;
 	

@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/fonts.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 		
+		<script src="assets/js/soundmanager2.js" type="text/javascript"></script>
 
 	</head>
 	
@@ -96,15 +97,25 @@
 						],
 				callback: function(module1, module2) {
 					window.addEventListener("load", new function() {
-						loadingStatus("Loading ...");
+						loadingStatus("Preparing SoundManager");
 						
 						showStage("load");
-						
-						window.lzmalib = new LZMA("assets/js/lzma_worker.js");
-						
-						InstalledPacks.forEach(function (a) {
-							Packs.prepared++;
-							Packs.loadPack("packs/"+a+"/"+a+".js?"+v);
+						soundManager.setup({
+							url: 'assets/swf/',
+							onready: function() {
+								loadingStatus("Loading ...");
+								
+								window.lzmalib = new LZMA("assets/js/lzma_worker.js");
+								
+								InstalledPacks.forEach(function (a) {
+									Packs.prepared++;
+									Packs.loadPack("packs/"+a+"/"+a+".js?"+v);
+								});
+							},
+							ontimeout: function() {
+								loadingStatus("Error! Could not load SoundManager Library");
+							}
+
 						});
 							
 					});

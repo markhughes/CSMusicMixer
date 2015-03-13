@@ -73,21 +73,20 @@ Packs.setSoundPath = function(pack, path) {
 Packs.addSound = function(soundData) {
 	loadingStatus("Adding " + soundData.label + " to " + soundData.pack_id);  
 	
-	// Generate the audio file ID (it's based off the mp3 file)
-	var id = soundData.file.substring(0, soundData.file.length - 4);
-	
-	// Store the audio object
-	this.audioObjects[id] = new Audio(this.soundsPaths[soundData.pack_id]  + soundData.file);
-	
 	// Create a sounds total 
 	this.soundsTotal++;
 	
-	// Preload it
-	this.audioObjects[id].setAttribute("preload", "auto");
-	this.audioObjects[id].addEventListener("canplaythrough", function() {
-		Packs.audioReady();
+	// Generate the audio file ID (it's based off the mp3/wav file)
+	var id = soundData.file.substring(0, soundData.file.length - 4);
+	
+	this.audioObjects[id] = soundManager.createSound({
+		autoLoad: true,
+		url: this.soundsPaths[soundData.pack_id]  + soundData.file,
+		whileloading: function() { 
+			Packs.audioReady();
+		}
 	});
-            
+	            
 	// We add it to a collection array, this allows us to quickly fetch all the sounds in a pack
 	if(this.collection[soundData.pack_id] == null) this.collection[soundData.pack_id] = [];
 	this.collection[soundData.pack_id].push(id);
