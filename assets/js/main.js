@@ -42,9 +42,11 @@ function openMixer() {
 }
 
 function showImport() {
-	var options = [];
-	options["yes"] = true;
-	Interface.showMessage("Not Ready!", "This option isn't ready yet.<br><br>It should be in the next release.", null, options);
+	Interface.showInput("Import", "Enter the import code!", "", function(results) {
+		if(results != null) {
+			Mixer.doImport(results.value);			
+		}
+	});
 }
 
 function runFixes() {

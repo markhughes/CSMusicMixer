@@ -281,12 +281,11 @@ Mixer.save = function() {
 									
 			localStorage.setItem("savedTracks", JSON.stringify(tracks));
 			
-			var options = [];
-			options["yes"] = true;
+			Mixer.loadExistingTracks();
 			
-			Interface.showMessage("Saved", "Your track has been saved!", null, options);
+			Interface.showMessage("Saved", "Your track has been saved!", null, { yes: true} );
 		}
-	 });
+	});
 }
 
 Mixer.share = function() {
