@@ -292,11 +292,8 @@ Mixer.share = function() {
 	window.lzmalib.compress(
 		JSON.stringify(0+"||[\/@]/@||"+JSON.stringify(StepSequence._set)), 1,
 		function on_compress_complete(str) {
-			var options = [];
-			options["yes"] = true;
-			
 			var content = "Here is your share key:<br><textarea name=\"textarea\" rows=\"10\" cols=\"40\">" + str.toString().replaceAll(",", " ") + "</textarea>";
-			Interface.showMessage("Share this!", content, null, options);
+			Interface.showMessage("Share this!", content, null, {yes:true});
 		}
 	);
 }

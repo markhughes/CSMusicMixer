@@ -57,7 +57,7 @@ StepSequence.playPointer = function(row, at) {
 	if(StepSequence._set[row][at] != "_" && StepSequence._set[row][at] != "") {
 		// Play it! 		
 		StepSequence.objs[StepSequence.objCounts] = Packs.getSound(Mixer.getSample(row));
-				
+		
 		StepSequence.objs[StepSequence.objCounts].play();
 		StepSequence.objCounts++;
 	}
@@ -76,7 +76,7 @@ StepSequence.playPointer = function(row, at) {
 StepSequence.playTrack = function() {
 	StepSequence.timeLine = setInterval(function() {
 		StepSequence.moveTimeline()
-	}, 1000);
+	}, 110);
 	
 	if(StepSequence._set[0] != null) StepSequence.playRow(0);
 	if(StepSequence._set[1] != null) StepSequence.playRow(1);
@@ -167,9 +167,9 @@ StepSequence.buildSequence = function() {
 StepSequence._at = 0;
 
 StepSequence.moveTimeline = function() {
-	StepSequence._at = StepSequence._at+1;	
+	StepSequence._at = StepSequence._at+0.055;	
 
-	document.getElementById("timeline-container").style.left = (parseInt(document.getElementById("timeline-container").style.left.replace("px", ""))+9) + 'px';
+	document.getElementById("timeline-container").style.left = (parseInt(document.getElementById("timeline-container").style.left.replace("px", ""))+1) + 'px';
 	
 	document.getElementById("timeline-seconds").innerHTML = Math.floor(StepSequence._at, 1) + "s";
 	
@@ -188,7 +188,10 @@ StepSequence.stop = function() {
 	if(StepSequence._timers[4] != null) clearTimeout(StepSequence._timers[4]);
 	if(StepSequence._timers[5] != null) clearTimeout(StepSequence._timers[5]);
 
-	StepSequence.objs.forEach(function (o) { o.pause(); });
+	StepSequence.objs.forEach(function (o) {
+		o.stop();
+		o.setPosition(0);
+	});
 
 	StepSequence._timers[0] = null;
 	StepSequence._timers[1] = null;
