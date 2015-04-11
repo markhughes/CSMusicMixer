@@ -194,7 +194,7 @@ Packs.audioReady = function() {
 Packs.show = function(pack) {
 	if(Packs.collection[pack] == null) return;
 	
-	var template = "<span id=\"%id%\" class=\"trackname\" draggable=\"true\" ondrag=\"window.dragID = this.id;\" onclick=\"Packs.preview('%id%');\" onmouseout=\"window.previewSound.pause();\">%name%</span>";
+	var template = "<span id=\"%id%\" class=\"trackname\" draggable=\"true\" ondrag=\"window.dragID = this.id;\" ondragover=\"event.preventDefault();\"  onclick=\"Packs.preview('%id%');\" onmouseout=\"window.previewSound.pause();\">%name%</span>";
 	var master_template = "";
 	
 	Packs.collection[pack].forEach(function(id) { 

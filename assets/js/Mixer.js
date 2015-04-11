@@ -188,7 +188,7 @@ Mixer.buildBlankRows = function() {
 	
 	var row_template = ''+
 '			<div id="row" class="row%i% two">'+
-'				<div id="leftbox" ondrop="Mixer.droppedOn(event)" ondragover="event.preventDefault();" row="%i%">'+
+'				<div id="leftbox" ondrop="return(Mixer.droppedOn(event))" ondragover="event.preventDefault();" row="%i%">'+
 '					<input id="row%i%_option" class="trackID" disabled value="" row="%i%">'+
 '					<br row="%i%">'+
 '					<input class="volumeSlider" type="range" min="1" max="100" value="100" id="volume_%i%" onchange="Mixer.changeVolume(%i%, this.value);" row="%i%">'+
@@ -330,8 +330,15 @@ Mixer.changeVolume = function(row, value) {
 }
 
 Mixer.droppedOn = function(event) {
-	document.getElementById("row"+event.toElement.getAttribute("row")+"_option").value = window.dragID;
+	window.daEvent = event;
 	
-	Mixer.changeSampleAtRow(event.toElement.getAttribute("row"));
+	var elementTo = event.relatedTarget || event.toElement || event.target;
+	console.log(elementTo);
+	
+	document.getElementById("row"+elementTo.getAttribute("row")+"_option").value = window.dragID;
+	
+	Mixer.changeSampleAtRow(elementTo.getAttribute("row"));
+	
+	return false;
 }
 
