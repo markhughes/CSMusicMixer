@@ -86,7 +86,12 @@ Packs.addSound = function(soundData) {
 			Packs.audioReady();
 		}
 	});
-	            
+	
+	var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+	if(iOS) {
+		// iOS cant autoload songs, so we just assume they're loaded 
+		Packs.audioReady();
+	}	            
 	// We add it to a collection array, this allows us to quickly fetch all the sounds in a pack
 	if(this.collection[soundData.pack_id] == null) this.collection[soundData.pack_id] = [];
 	this.collection[soundData.pack_id].push(id);
