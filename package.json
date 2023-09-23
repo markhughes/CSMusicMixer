@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://MarkehMe@github.com/MarkehMe/MusicMixer.git"
+    "url": "https://markhughes@github.com/markhughes/MusicMixer.git"
   },
   "author": "Mark Hughes <mark@markeh.me>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MarkehMe/MusicMixer/issues"
+    "url": "https://github.com/markhughes/MusicMixer/issues"
   },
-  "homepage": "https://github.com/MarkehMe/MusicMixer"
+  "homepage": "https://github.com/markhughes/MusicMixer"
 }
