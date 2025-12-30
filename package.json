@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "build:pages": "webpack --env PUBLIC_PATH=/CSMusicMixer/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
