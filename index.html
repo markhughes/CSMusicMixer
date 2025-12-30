@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/fonts.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
-		<script src="assets/js/soundmanager2.js" type="text/javascript"></script>
+		<script src="assets/js/LZMA.js" type="text/javascript"></script>
 
 	</head>
 
@@ -85,49 +85,5 @@
 				</div>
 			</div>
 		</div>
-
-		<script>
-			var v = 1.4;
-
-			var require = {
-				deps: [		"packs.js?"+new Date(),
-							"assets/js/PrototypeTools.js?"+v,
-							"assets/js/LZMA.js?"+v,
-							"assets/js/Base64.js?"+v,
-							"assets/js/Txt.js?"+v,
-							"assets/js/StepSequence.js?"+v,
-							"assets/js/Mixer.js?"+v,
-							"assets/js/Interface.js?"+v,
-							"assets/js/Packs.js?"+v,
-							"assets/js/main.js?"+v,
-						],
-				callback: function(module1, module2) {
-					window.addEventListener("load", new function() {
-						loadingStatus("Preparing SoundManager");
-
-						showStage("load");
-						soundManager.setup({
-							url: 'assets/swf/',
-							onready: function() {
-								loadingStatus("Loading ...");
-
-								window.lzmalib = new LZMA("assets/js/lzma_worker.js");
-
-								InstalledPacks.forEach(function (a) {
-									Packs.prepared++;
-									Packs.loadPack("packs/"+a+"/"+a+".js?"+v);
-								});
-							},
-							ontimeout: function() {
-								loadingStatus("Error! Could not load SoundManager Library");
-							}
-
-						});
-
-					});
-				}
-			};
-		</script>
-		<script src="assets/js/require.js"></script>
 	</body>
 </html>
