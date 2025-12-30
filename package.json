@@ -1,6 +1,6 @@
 {
   "name": "MusicMixer",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A recreation and modernisation of the MyCoke Music Mixer licensed under The MIT License.",
   "main": "dist/bundle.js",
   "scripts": {
